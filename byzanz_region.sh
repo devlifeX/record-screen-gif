@@ -6,6 +6,7 @@ DELAY=3
 DIRECTORY="recored"
 TIME=$(date +"%Y-%m-%d_%H%M%S")
 
+cd $HOME
 if [ ! -d "$DIRECTORY" ]; then
   mkdir -p "$DIRECTORY"
 fi
