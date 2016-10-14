@@ -26,7 +26,7 @@ make install
 ```
 Go to ``record-screen-gif`` directory and run
 ```bash
-./installer_record_screen.sh
+./installer_screen_record.sh
 ```
 You can use 
 ```bash
