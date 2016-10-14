@@ -12,6 +12,7 @@ if [ ! -d "$DIRECTORY" ]; then
 fi
 
 PATHX=`realpath $DIRECTORY`
+ABS_FILE_NAME="$PATHX/recored-$TIME"
 FILE_NAME="$PATHX/recored-$TIME.gif"
 
 
@@ -21,7 +22,6 @@ beep() {
   paplay /usr/share/sounds/KDE-Im-Irc-Event.ogg &
 }
 
-DEFDUR=10
 
 # Custom recording duration as set by user
 USERDUR=$(gdialog --title "Duration?" --inputbox "Please enter the screencast duration in seconds" 200 100 2>&1)
@@ -30,7 +30,8 @@ USERDUR=$(gdialog --title "Duration?" --inputbox "Please enter the screencast du
 if [ $USERDUR -gt 0 ]; then
   Duration=$USERDUR
 else
-  Duration=$DEFDUR
+  echo "Operation abort by user"
+  exit
 fi
 
 
@@ -48,5 +49,6 @@ for (( i=$DELAY; i>0; --i )) ; do
 done
 beep
 byzanz-record --verbose --delay=0 ${ARGUMENTS} $D
+gifsicle -O3 --lossy=50 -o "$ABS_FILE_NAME-opt.gif" "$FILE_NAME" 
 beep
 xdg-open "$DIRECTORY"
