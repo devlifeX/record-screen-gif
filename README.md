@@ -1,6 +1,8 @@
 # Record screen gif
 This isn't standalone program, this is solution for record selected region with gif output
 
+![alt tag](https://raw.githubusercontent.com/devlifex/record-screen-gif/master/recored-2016-10-14_200028-opt.gif)
+
 You need record screen with gif output also need optimize gif file?
 
 Do the following steps
@@ -33,3 +35,4 @@ You can use
 screen_record
 ```
 for recording
+
