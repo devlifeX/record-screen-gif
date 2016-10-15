@@ -49,6 +49,6 @@ for (( i=$DELAY; i>0; --i )) ; do
 done
 beep
 byzanz-record --verbose --delay=0 ${ARGUMENTS} $D
-gifsicle -O3 --lossy=50 -o "$ABS_FILE_NAME-opt.gif" "$FILE_NAME" 
 beep
+gifsicle -O3 --lossy=50 -o "$ABS_FILE_NAME-opt.gif" "$FILE_NAME" 
 xdg-open "$DIRECTORY"
