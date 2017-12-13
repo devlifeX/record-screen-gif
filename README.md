@@ -34,8 +34,8 @@ Install giflossy
 cd /tmp
 git clone https://github.com/pornel/giflossy.git
 cd giflossy
-chmod 777 bootstrap
-./bootstrap
+chmod 777 bootstrap.sh
+./bootstrap.sh
 ./configure --prefix /usr
 make
 sudo make install
