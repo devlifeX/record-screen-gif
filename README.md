@@ -6,25 +6,39 @@ This isn't standalone program, this is solution for record selected region with 
 You need record screen with gif output also need optimize gif file?
 
 Do the following steps
-##Install xrectsel
+
+Dependencies
+========
+Run following command to ensure dependencies are ok.
+notice: if you are on debian base like(Ubuntu, Mint etc) run below command
+```bash
+sudo apt-get install dh-autoreconf
+```
+Install xrectsel
+========
+
 ```bash
 cd /tmp
 git clone https://github.com/lolilolicon/xrectsel.git
 cd xrectsel
+chmod 777 bootstrap
 ./bootstrap
 ./configure --prefix /usr
 make
-make install
+sudo make install
 ```
-##Install giflossy
+Install giflossy
+========
+
 ```bash
 cd /tmp
 git clone https://github.com/pornel/giflossy.git
 cd giflossy
+chmod 777 bootstrap
 ./bootstrap
 ./configure --prefix /usr
 make
-make install
+sudo make install
 ```
 Go to ``record-screen-gif`` directory and run
 ```bash
