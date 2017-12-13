@@ -12,8 +12,7 @@ Dependencies
 Run following command to ensure dependencies are ok.
 notice: if you are on debian base like(Ubuntu, Mint etc) run below command
 ```bash
-sudo apt-get install byzanz
-sudo apt-get install dh-autoreconf
+sudo apt-get install byzanz dh-autoreconf
 ```
 Install xrectsel
 ========
