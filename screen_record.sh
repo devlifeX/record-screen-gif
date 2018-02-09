@@ -61,14 +61,18 @@ function post_process()
 	xdg-open "$DIRECTORY"
 }
 
+byzanz_pid=""
+
 function trap_ctrlc()
 {
+	if [ "$byzanz_pid" != "" ]; then kill $byzanz_pid; fi
 	post_process
 	exit 0
 }
 
 beep
 byzanz-record --verbose --delay=0 ${ARGUMENTS} $D &
+byzanz_pid=$!
 if [ "$use_trap" != 1 ]; then
 	wait
 else
