@@ -27,7 +27,7 @@ beep() {
 USERDUR=$(gdialog --title "Duration?" --inputbox "Please enter the screencast duration in seconds" 200 100 2>&1)
 
 # Duration and output file
-if [ $USERDUR -gt 0 ]; then
+if [[ "$USERDUR" != "" && $USERDUR -gt 0 ]]; then
   Duration=$USERDUR
 else
   echo "Operation abort by user"
