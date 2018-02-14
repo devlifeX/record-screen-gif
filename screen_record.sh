@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# --console : use ctrl+c to stop recording
+if [ "$1" == "--console" ]; then use_trap=1; fi
+
 # Delay before starting
 DELAY=3
 
@@ -23,20 +26,22 @@ beep() {
 }
 
 
-# Custom recording duration as set by user
-USERDUR=$(gdialog --title "Duration?" --inputbox "Please enter the screencast duration in seconds" 200 100 2>&1)
+if [ "$use_trap" != 1 ]; then
+	# Custom recording duration as set by user
+	USERDUR=$(gdialog --title "Duration?" --inputbox "Please enter the screencast duration in seconds" 200 100 2>&1)
 
-# Duration and output file
-if [ $USERDUR -gt 0 ]; then
-  Duration=$USERDUR
+	# Duration and output file
+	if [[ "$USERDUR" != "" && $USERDUR -gt 0 ]]; then
+	  Duration=$USERDUR
+	else
+	  echo "Operation abort by user"
+	  exit
+	fi
+
+	D="--duration=$Duration $FILE_NAME"
 else
-  echo "Operation abort by user"
-  exit
+	D="--duration=36000 $FILE_NAME"
 fi
-
-
-
-D="--duration=$Duration $FILE_NAME"
 
 
 # xrectsel from https://github.com/lolilolicon/xrectsel
@@ -47,8 +52,34 @@ for (( i=$DELAY; i>0; --i )) ; do
   echo $i
   sleep 1
 done
+
+function post_process()
+{
+	echo "post process"
+	beep
+	gifsicle -O3 --lossy=50 -o "$ABS_FILE_NAME-opt.gif" "$FILE_NAME" 
+	xdg-open "$DIRECTORY"
+}
+
+byzanz_pid=""
+
+function trap_ctrlc()
+{
+	if [ "$byzanz_pid" != "" ]; then kill $byzanz_pid; fi
+	post_process
+	exit 0
+}
+
 beep
-byzanz-record --verbose --delay=0 ${ARGUMENTS} $D
-beep
-gifsicle -O3 --lossy=50 -o "$ABS_FILE_NAME-opt.gif" "$FILE_NAME" 
-xdg-open "$DIRECTORY"
+byzanz-record --verbose --delay=0 ${ARGUMENTS} $D &
+byzanz_pid=$!
+if [ "$use_trap" != 1 ]; then
+	wait
+else
+	trap "trap_ctrlc" 2
+	echo "press ctrl+c to stop recording"
+	while true; do
+		sleep 1
+	done
+fi
+post_process
